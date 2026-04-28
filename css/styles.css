@@ -1,0 +1,906 @@
+/* =========================================================================
+   kengreibesland.no
+   Bygd for hånd. Ren CSS. Ingen byggesteg.
+
+   Strukturen i fila:
+     1. Variabler (farger, typografi, mål)
+     2. Reset og base
+     3. Typografi (serif headlines, body, mono)
+     4. Layout (container, grid, seksjoner)
+     5. Komponenter (nav, hero, kort, footer)
+     6. Hjelpere og animasjoner
+     7. Responsive breakpoints
+
+   Designvalg jeg gjorde bevisst (forklart der det ikke er åpenbart fra
+   selve regelen):
+     - Body bruker Inter med 1.55 line-height. 1.5 er for tett for serif-
+       blandet layout, 1.6 blir luftig nok til å se "satt" ut.
+     - Headlines bruker EB Garamond med vekt 500. 600 ble for tungt mot
+       Inter body. 500 holder serif-følelsen uten å rope.
+     - Mono brukes BARE til metadata (dato, kategori, tags). Aldri body.
+     - Linker har en understreking som tegnes fra venstre med scaleX, ikke
+       en vanlig text-decoration som hopper. Subtilt, men gir kodefyr-vibe.
+   ========================================================================= */
+
+
+/* 1. Variabler ============================================================ */
+:root {
+  /* Farger fra Greibesland Consulting brand-guide. */
+  --navy:  #0A2540;
+  --white: #FFFFFF;
+  --slate: #5B6B7E;
+  --bone:  #FAFAF8;
+  --ink:   #1A1A1A;
+
+  /* Hairline border-farge brukt på subtile divider-linjer.
+     Bygd fra navy med lav opacity slik at den toner med bakgrunn. */
+  --hairline: rgba(10, 37, 64, 0.12);
+
+  /* Typografi-stack. Inter og EB Garamond hentes fra Google Fonts i HTML.
+     System-fallbacks tatt med slik at siden fortsatt ser anstendig ut hvis
+     fonts mister forbindelse. */
+  --serif: "EB Garamond", Georgia, "Times New Roman", serif;
+  --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Skala. Bruker clamp() for hero slik at den skalerer mykt mellom
+     mobil og desktop uten media queries på selve typografien. */
+  --fs-mono:    0.75rem;     /* 12 */
+  --fs-meta:    0.8125rem;   /* 13 */
+  --fs-body:    1rem;        /* 16 */
+  --fs-lead:    1.125rem;    /* 18, brukt på lead-paragrafer */
+  --fs-h3:      1.5rem;      /* 24 */
+  --fs-h2:      clamp(1.875rem, 1.4rem + 1.6vw, 2.75rem);
+  --fs-h1:      clamp(2.5rem, 1.6rem + 4vw, 5.25rem);
+
+  /* Spacing-skala i rem. 8px-grid (0.5rem) som basis. */
+  --s-1:  0.25rem;
+  --s-2:  0.5rem;
+  --s-3:  0.75rem;
+  --s-4:  1rem;
+  --s-5:  1.5rem;
+  --s-6:  2rem;
+  --s-7:  3rem;
+  --s-8:  4rem;
+  --s-9:  6rem;
+  --s-10: 8rem;
+
+  /* Container. 1280px ble valgt fordi 1200 er forutsigbar Bootstrap, og
+     1440 går for bredt for serif-headlines. */
+  --container: 1280px;
+  --gutter:    clamp(1.25rem, 4vw, 3rem);
+
+  /* Animasjons-tider. Holdes korte slik at det aldri føles som om siden
+     "venter på seg selv". */
+  --t-fast: 120ms;
+  --t-base: 200ms;
+  --ease:   cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+
+/* 2. Reset og base ======================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--sans);
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--bone);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+ul, ol { list-style: none; }
+
+::selection {
+  background: var(--navy);
+  color: var(--bone);
+}
+
+
+/* 3. Typografi ============================================================ */
+
+/* Serif-headlines. Vekt 500 valgt etter sammenligning mot 600.
+   600 ble for tett mot Inter body på desktop. */
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+  color: var(--ink);
+}
+
+h1 { font-size: var(--fs-h1); line-height: 1.02; }
+h2 { font-size: var(--fs-h2); line-height: 1.1; }
+h3 { font-size: var(--fs-h3); line-height: 1.2; }
+
+p {
+  max-width: 60ch;       /* leselig linjelengde for body-tekst */
+}
+
+p + p { margin-top: var(--s-4); }
+
+.lead {
+  font-size: var(--fs-lead);
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.mono {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+.meta {
+  font-family: var(--mono);
+  font-size: var(--fs-meta);
+  color: var(--slate);
+  letter-spacing: 0.02em;
+}
+
+
+/* 4. Layout =============================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Seksjons-padding. Vertikal puste-rom som matcher den editoriale
+   referansen (Stripe Press, andersrodem.no). */
+section {
+  padding-block: var(--s-9);
+}
+
+.section--tight  { padding-block: var(--s-7); }
+.section--navy   { background: var(--navy); color: var(--bone); }
+.section--bone   { background: var(--bone); }
+.section--white  { background: var(--white); }
+
+.section--navy h1,
+.section--navy h2,
+.section--navy h3 { color: var(--white); }
+.section--navy .mono,
+.section--navy .meta { color: rgba(255,255,255,0.65); }
+
+
+/* 5. Komponenter ========================================================== */
+
+/* --- Navigasjon --- */
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  padding-block: var(--s-4);
+  background: transparent;
+  transition: background var(--t-base) var(--ease),
+              border-color var(--t-base) var(--ease),
+              padding var(--t-base) var(--ease);
+  border-bottom: 1px solid transparent;
+}
+
+.nav.is-scrolled {
+  background: rgba(250, 250, 248, 0.92);
+  backdrop-filter: saturate(180%) blur(8px);
+  -webkit-backdrop-filter: saturate(180%) blur(8px);
+  border-bottom-color: var(--hairline);
+  padding-block: var(--s-3);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--s-6);
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.nav__logo img { height: 22px; width: auto; }
+
+.nav__links {
+  display: flex;
+  gap: var(--s-5);
+  margin-left: auto;
+}
+
+.nav__links a {
+  position: relative;
+  font-size: 0.9375rem;
+  color: var(--ink);
+  padding-block: 2px;
+}
+
+/* Understreking tegnes fra venstre. transform-origin sikrer retningen. */
+.nav__links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--t-base) var(--ease);
+}
+
+.nav__links a:hover::after,
+.nav__links a[aria-current="page"]::after { transform: scaleX(1); }
+
+.nav__url {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  color: var(--slate);
+  letter-spacing: 0.02em;
+}
+
+/* På smale skjermer skjules nav-url og linker komprimeres. */
+@media (max-width: 640px) {
+  .nav__url { display: none; }
+  .nav__links { gap: var(--s-4); }
+  .nav__links a { font-size: 0.875rem; }
+}
+
+
+/* --- Hero --- */
+
+.hero {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  padding-top: var(--s-10);
+  padding-bottom: var(--s-9);
+  background: var(--bone);
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-7);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .hero__grid {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: var(--s-8);
+  }
+}
+
+.hero__title {
+  font-size: var(--fs-h1);
+  letter-spacing: -0.02em;
+}
+
+.hero__lead {
+  margin-top: var(--s-5);
+  font-size: var(--fs-lead);
+  color: var(--ink);
+  max-width: 52ch;
+}
+
+.hero__body {
+  margin-top: var(--s-5);
+  color: var(--ink);
+  max-width: 52ch;
+}
+
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-6);
+  font-size: 1rem;
+  color: var(--navy);
+  border-bottom: 1px solid var(--navy);
+  padding-bottom: 2px;
+  transition: gap var(--t-base) var(--ease);
+}
+
+.hero__cta:hover { gap: var(--s-3); }
+
+.hero__meta {
+  margin-top: var(--s-7);
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  color: var(--slate);
+}
+
+.hero__mark {
+  display: grid;
+  place-items: center;
+  opacity: 0.85;
+}
+
+.hero__mark img {
+  max-width: min(360px, 80%);
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 899px) {
+  .hero__mark { display: none; }
+}
+
+
+/* --- Eyebrow / seksjonstittel --- */
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  color: var(--slate);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--s-4);
+}
+
+.section__head {
+  display: grid;
+  gap: var(--s-3);
+  margin-bottom: var(--s-7);
+  max-width: 36ch;
+}
+
+
+/* --- Tre-kolonne "hva jeg holder på med" --- */
+
+.cols-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-6);
+}
+
+@media (min-width: 760px) {
+  .cols-3 { grid-template-columns: repeat(3, 1fr); gap: var(--s-7); }
+}
+
+.col {
+  display: grid;
+  gap: var(--s-3);
+  align-content: start;
+}
+
+.col h3 { font-size: 1.625rem; }
+.col p  { color: rgba(255,255,255,0.78); max-width: 32ch; }
+
+
+/* --- Prosjektkort på forsiden (asymmetrisk grid) --- */
+
+.featured {
+  display: grid;
+  gap: var(--s-6);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 900px) {
+  .featured {
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--s-7) var(--s-6);
+  }
+  /* Asymmetrisk: første og fjerde tar mer plass enn de andre to.
+     Dette bryter den typiske "alle kort lik størrelse"-følelsen. */
+  .featured .card:nth-child(1) { grid-column: span 4; }
+  .featured .card:nth-child(2) { grid-column: span 2; }
+  .featured .card:nth-child(3) { grid-column: span 3; }
+  .featured .card:nth-child(4) { grid-column: span 3; }
+}
+
+.card {
+  display: grid;
+  gap: var(--s-3);
+  padding-block: var(--s-4);
+  border-top: 1px solid var(--hairline);
+  transition: transform var(--t-base) var(--ease);
+}
+
+.card__meta {
+  display: flex;
+  gap: var(--s-3);
+  align-items: center;
+}
+
+.card__title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.625rem;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.card__desc {
+  color: var(--slate);
+  max-width: 44ch;
+  font-size: 0.9375rem;
+}
+
+.card__cta {
+  font-size: 0.875rem;
+  color: var(--navy);
+  display: inline-flex;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity var(--t-base) var(--ease),
+              transform var(--t-base) var(--ease);
+}
+
+.card:hover .card__cta {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+/* --- Notat-preview --- */
+
+.notes-list { display: grid; gap: var(--s-5); }
+
+.note {
+  display: grid;
+  gap: var(--s-2);
+  padding-block: var(--s-5);
+  border-top: 1px solid var(--hairline);
+}
+
+.note:last-child { border-bottom: 1px solid var(--hairline); }
+
+.note__title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.note__excerpt {
+  color: var(--slate);
+  font-size: 0.9375rem;
+  max-width: 60ch;
+}
+
+
+/* --- Footer --- */
+
+.footer {
+  background: var(--bone);
+  padding-block: var(--s-8) var(--s-6);
+  border-top: 1px solid var(--hairline);
+}
+
+.footer__grid {
+  display: grid;
+  gap: var(--s-6);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 760px) {
+  .footer__grid {
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: var(--s-7);
+  }
+}
+
+.footer__mark img { max-width: 90px; }
+.footer__col h4 {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--slate);
+  margin-bottom: var(--s-3);
+}
+
+.footer__col a { display: block; padding-block: 2px; }
+.footer__col a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.footer__bottom {
+  margin-top: var(--s-7);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  color: var(--slate);
+  letter-spacing: 0.02em;
+  border-top: 1px solid var(--hairline);
+  padding-top: var(--s-4);
+}
+
+
+/* --- Arbeid-side: filter + liste --- */
+
+.page-head {
+  padding-top: calc(var(--s-10) + var(--s-4));
+  padding-bottom: var(--s-7);
+}
+
+.page-head h1 {
+  font-size: clamp(2rem, 1.4rem + 2.5vw, 3.5rem);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-4);
+  margin-top: var(--s-6);
+  border-top: 1px solid var(--hairline);
+  padding-top: var(--s-4);
+}
+
+.filter {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--slate);
+  padding: 6px 0;
+  position: relative;
+  cursor: pointer;
+  transition: color var(--t-base) var(--ease);
+}
+
+.filter::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  height: 1px; width: 100%;
+  background: var(--navy);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--t-base) var(--ease);
+}
+
+.filter:hover { color: var(--ink); }
+.filter.is-active { color: var(--navy); }
+.filter.is-active::after { transform: scaleX(1); }
+
+.work-list {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.work-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-3);
+  padding-block: var(--s-5);
+  border-top: 1px solid var(--hairline);
+  align-items: start;
+  transition: background var(--t-base) var(--ease),
+              padding-inline var(--t-base) var(--ease);
+}
+
+@media (min-width: 760px) {
+  .work-item {
+    grid-template-columns: 88px 200px 1fr;
+    gap: var(--s-5);
+  }
+}
+
+/* Thumbnail per kategori. Lite kvadratisk merke, hvit flate med
+   hairline-border. SVG-glyfen inni er navy. Holder layouten editorial
+   uten å bli ikon-clipart. */
+.thumb {
+  width: 72px;
+  height: 72px;
+  background: var(--white);
+  border: 1px solid var(--hairline);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+@media (min-width: 760px) {
+  .thumb { width: 88px; height: 88px; }
+}
+
+.thumb svg {
+  width: 32px;
+  height: 32px;
+  color: var(--navy);
+  display: block;
+}
+
+.work-item:hover { background: rgba(10, 37, 64, 0.02); }
+
+.work-item__year {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  color: var(--slate);
+  letter-spacing: 0.04em;
+}
+
+.work-item__title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.375rem;
+  line-height: 1.25;
+  color: var(--ink);
+  margin-bottom: var(--s-2);
+}
+
+.work-item__desc {
+  color: var(--slate);
+  max-width: 60ch;
+  font-size: 0.9375rem;
+}
+
+.work-item__role {
+  display: flex;
+  gap: var(--s-3);
+  align-items: baseline;
+  margin-bottom: var(--s-2);
+}
+
+.work-item__role .mono { font-size: var(--fs-mono); }
+
+.work-item.is-hidden { display: none; }
+
+
+/* --- Om-side --- */
+
+.prose {
+  max-width: 62ch;
+  display: grid;
+  gap: var(--s-5);
+}
+
+.prose p { font-size: 1.0625rem; line-height: 1.65; color: var(--ink); }
+
+.timeline {
+  display: grid;
+  gap: var(--s-5);
+  margin-top: var(--s-7);
+}
+
+.timeline__item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-2);
+  padding-block: var(--s-3);
+  border-top: 1px solid var(--hairline);
+}
+
+@media (min-width: 760px) {
+  .timeline__item {
+    grid-template-columns: 200px 1fr;
+    gap: var(--s-5);
+  }
+}
+
+.timeline__year {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  color: var(--slate);
+}
+
+.timeline__title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.25rem;
+  margin-bottom: var(--s-1);
+}
+
+.timeline__desc { color: var(--slate); font-size: 0.9375rem; }
+
+
+/* --- Notat-essay (langform) --- */
+
+.essay {
+  padding-top: calc(var(--s-10) + var(--s-4));
+  padding-bottom: var(--s-9);
+}
+
+.essay__head {
+  max-width: 720px;
+  margin-bottom: var(--s-7);
+}
+
+.essay__title {
+  font-size: clamp(2rem, 1.4rem + 2.5vw, 3.25rem);
+  letter-spacing: -0.015em;
+}
+
+.essay__byline {
+  margin-top: var(--s-3);
+  display: flex;
+  gap: var(--s-3);
+}
+
+.essay__body {
+  max-width: 680px;
+  display: grid;
+  gap: var(--s-5);
+}
+
+.essay__body p {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--ink);
+  max-width: none;
+}
+
+.essay__body h2 {
+  font-size: 1.75rem;
+  margin-top: var(--s-5);
+}
+
+.figure {
+  margin-block: var(--s-7);
+  display: grid;
+  gap: var(--s-2);
+}
+
+.figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: var(--hairline);
+}
+
+.figure--full {
+  margin-inline: calc(var(--gutter) * -1);
+}
+
+@media (min-width: 1100px) {
+  .figure--full { margin-inline: calc((100vw - var(--container)) / -2 + var(--gutter) * -1); }
+}
+
+.figure__caption {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  color: var(--slate);
+  letter-spacing: 0.02em;
+  max-width: 60ch;
+}
+
+.figure-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-4);
+  margin-block: var(--s-7);
+}
+
+@media (min-width: 760px) {
+  .figure-grid { grid-template-columns: 1fr 1fr; }
+}
+
+
+/* --- Kontakt --- */
+
+.contact {
+  padding-top: calc(var(--s-10) + var(--s-6));
+  padding-bottom: var(--s-9);
+}
+
+.contact h1 {
+  font-size: clamp(2.25rem, 1.5rem + 3vw, 4rem);
+  margin-bottom: var(--s-6);
+}
+
+.contact__lead {
+  font-size: 1.125rem;
+  color: var(--ink);
+  max-width: 50ch;
+  margin-bottom: var(--s-7);
+}
+
+.contact-list {
+  display: grid;
+  gap: var(--s-3);
+  border-top: 1px solid var(--hairline);
+  padding-top: var(--s-5);
+  max-width: 540px;
+}
+
+.contact-list__row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: var(--s-4);
+  align-items: baseline;
+  padding-block: var(--s-2);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.contact-list__label {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  color: var(--slate);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.contact-list__value a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+
+/* 6. Hjelpere og animasjoner ============================================== */
+
+/* Fade-in via IntersectionObserver. Klassen `.reveal` legges på elementer
+   som skal vente på scroll. JS legger til `is-visible` når de kommer inn. */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 600ms var(--ease), transform 600ms var(--ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* 7. Sideovergang (rask fade) ============================================ */
+body { animation: page-in 80ms var(--ease) both; }
+@keyframes page-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

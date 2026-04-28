@@ -1,521 +1,231 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ken Greibesland</title>
-  <meta name="description" content="Ken Greibesland – student ved NHH i Bergen, gründer og analytiker. Jobber med forretningsanalyse og prosjekter innen strategi og teknologi.">
-<meta name="author" content="Ken Ole Fukuhara Greibesland">
+  <meta name="description" content="Førsteårs NHH-student. Bygger Greibesland Consulting. Tar case og koder.">
+
+  <!-- Open Graph / sosial deling -->
+  <meta property="og:title" content="Ken Greibesland">
+  <meta property="og:description" content="Førsteårs NHH-student. Bygger Greibesland Consulting. Tar case og koder.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kengreibesland.no/">
+  <meta property="og:image" content="https://kengreibesland.no/assets/logo-stacked-navy.png">
+
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="alternate icon" href="assets/favicon.ico">
+  <link rel="apple-touch-icon" href="assets/favicon.png">
+
+  <!-- Google Fonts. preconnect for raskere first paint. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    :root {
-      --font-display: 'Instrument Serif', Georgia, serif;
-      --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-
-      --text-xs: 0.75rem;
-      --text-sm: 0.875rem;
-      --text-base: 1rem;
-      --text-lg: 1.125rem;
-      --text-xl: 1.5rem;
-      --text-hero: clamp(2.2rem, 1.4rem + 3vw, 3.3rem);
-
-      --space-1: 0.25rem;
-      --space-2: 0.5rem;
-      --space-3: 0.75rem;
-      --space-4: 1rem;
-      --space-5: 1.25rem;
-      --space-6: 1.5rem;
-      --space-8: 2rem;
-      --space-10: 2.5rem;
-      --space-12: 3rem;
-      --space-16: 4rem;
-      --space-20: 5rem;
-
-      --color-bg: #faf9f5;
-      --color-surface: #ffffff;
-      --color-border: rgba(0,0,0,0.08);
-      --color-text: #111111;
-      --color-muted: #666666;
-      --color-faint: #aaaaaa;
-      --color-tag-bg: #f0eee7;
-      --color-tag-text: #555555;
-      --color-accent: #111111;
-
-      --max-width: 720px;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    body {
-      font-family: var(--font-body);
-      font-size: var(--text-base);
-      line-height: 1.65;
-      color: var(--color-text);
-      background: radial-gradient(circle at top left, #f0ede4 0, #faf9f5 40%, #fdfdfb 100%);
-    }
-
-    .page {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 var(--space-4) var(--space-16);
-    }
-
-    /* NAV */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(12px);
-      background: color-mix(in srgb, var(--color-bg) 80%, rgba(255,255,255,0.2) 20%);
-      border-bottom: 1px solid var(--color-border);
-    }
-
-    .nav-inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: var(--space-3) var(--space-4);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-4);
-    }
-
-    .nav-name {
-      font-family: var(--font-display);
-      font-size: var(--text-base);
-      letter-spacing: -0.01em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: var(--space-4);
-      align-items: center;
-      font-size: var(--text-sm);
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: var(--color-muted);
-      padding-bottom: 2px;
-      border-bottom: 1px solid transparent;
-      transition: color 0.15s ease, border-color 0.15s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--color-text);
-      border-color: var(--color-border);
-    }
-
-    /* HERO */
-    .hero {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: var(--space-8);
-      padding: var(--space-16) var(--space-4) var(--space-12);
-      align-items: center;
-    }
-
-    .hero-avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 999px;
-      border: 1px solid var(--color-border);
-      background: radial-gradient(circle at 30% 20%, #ffffff, #e4dfd1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      font-size: var(--text-lg);
-      color: var(--color-muted);
-    }
-
-    .hero-text h1 {
-      font-family: var(--font-display);
-      font-size: var(--text-hero);
-      font-weight: 400;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: var(--space-4);
-    }
-
-    .hero-tagline {
-      font-size: var(--text-sm);
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--color-muted);
-      margin-bottom: var(--space-4);
-    }
-
-    .hero-intro {
-      font-size: var(--text-base);
-      color: var(--color-muted);
-      max-width: 46ch;
-    }
-
-    /* SECTIONS */
-    section {
-      padding: 0 var(--space-4);
-      margin-top: var(--space-12);
-    }
-
-    .section-heading {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      margin-bottom: var(--space-4);
-    }
-
-    .section-sub {
-      font-size: var(--text-sm);
-      color: var(--color-muted);
-      margin-bottom: var(--space-4);
-    }
-
-    /* LIST / ITEMS */
-    .list {
-      border-top: 1px solid var(--color-border);
-    }
-
-    .item {
-      padding: var(--space-4) 0;
-      border-bottom: 1px solid var(--color-border);
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      column-gap: var(--space-4);
-      row-gap: var(--space-2);
-      align-items: baseline;
-    }
-
-    .item-year {
-      font-size: var(--text-xs);
-      color: var(--color-faint);
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      white-space: nowrap;
-    }
-
-    .item-main {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-1);
-    }
-
-    .item-title {
-      font-size: var(--text-base);
-      font-weight: 500;
-    }
-
-    .item-meta {
-      font-size: var(--text-sm);
-      color: var(--color-muted);
-    }
-
-    .item-desc {
-      font-size: var(--text-sm);
-      color: var(--color-muted);
-      margin-top: var(--space-1);
-      max-width: 52ch;
-    }
-
-    .item-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-2);
-      margin-top: var(--space-2);
-    }
-
-    .tag-pill {
-      font-size: var(--text-xs);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: var(--color-tag-bg);
-      color: var(--color-tag-text);
-    }
-
-    /* KONTAKT */
-    .contact {
-      margin-top: var(--space-16);
-      padding: 0 var(--space-4);
-    }
-
-    .contact h2 {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      margin-bottom: var(--space-3);
-    }
-
-    .contact p {
-      font-size: var(--text-base);
-      color: var(--color-muted);
-      margin-bottom: var(--space-6);
-      max-width: 46ch;
-    }
-
-    .contact-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-4);
-      align-items: center;
-    }
-
-    .btn-primary {
-      display: inline-block;
-      padding: 10px 22px;
-      border-radius: 999px;
-      background: var(--color-accent);
-      color: #ffffff;
-      font-size: var(--text-sm);
-      text-decoration: none;
-      font-weight: 500;
-      transition: opacity 0.15s ease, transform 0.15s ease;
-    }
-
-    .btn-primary:hover {
-      opacity: 0.9;
-      transform: translateY(-1px);
-    }
-
-    .contact-inline {
-      font-size: var(--text-sm);
-      color: var(--color-muted);
-    }
-
-    .contact-inline a {
-      color: var(--color-text);
-      text-decoration: none;
-      border-bottom: 1px solid var(--color-border);
-      padding-bottom: 1px;
-    }
-
-    .contact-inline a:hover {
-      border-color: var(--color-text);
-    }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--color-border);
-      margin-top: var(--space-16);
-      padding: var(--space-6) var(--space-4);
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-3);
-      align-items: center;
-      justify-content: space-between;
-      font-size: var(--text-sm);
-      color: var(--color-faint);
-    }
-
-    .footer-locs {
-      display: flex;
-      gap: var(--space-2);
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .footer-dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 999px;
-      background: var(--color-faint);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: var(--space-4);
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      color: var(--color-muted);
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      padding-bottom: 1px;
-    }
-
-    .footer-links a:hover {
-      border-color: var(--color-border);
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 640px) {
-      .hero {
-        grid-template-columns: 1fr;
-        row-gap: var(--space-6);
-        padding-top: var(--space-12);
-      }
-      .hero-avatar {
-        order: -1;
-      }
-      .item {
-        grid-template-columns: 1fr;
-      }
-      .item-year {
-        order: -1;
-      }
-      .nav-inner {
-        padding-inline: var(--space-4);
-      }
-      .page {
-        padding-bottom: var(--space-12);
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-inner">
-      <div class="nav-name">Ken Greibesland</div>
-      <div class="nav-links">
-        <a href="#arbeid">Arbeid</a>
-        <a href="#kontakt">Kontakt</a>
-      </div>
+  <!-- Nav: transparent over hero, bone-bakgrunn på scroll (handteres i main.js). -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="Ken Greibesland, til forsiden">
+        <img src="assets/logo-horizontal-navy.png" alt="Greibesland Consulting">
+      </a>
+      <nav class="nav__links" aria-label="Hovedmeny">
+        <a href="arbeid.html">Arbeid</a>
+        <a href="om.html">Om</a>
+        <a href="notater.html">Notater</a>
+        <a href="kontakt.html">Kontakt</a>
+      </nav>
+      <span class="nav__url" aria-hidden="true">kengreibesland.no</span>
     </div>
-  </nav>
+  </header>
 
-  <main class="page">
+  <main>
 
-    <!-- HERO -->
+    <!-- Hero: asymmetrisk, tekst venstre 60%, segl høyre. -->
     <section class="hero">
-      <div class="hero-text">
-        <div class="hero-tagline">Student, gründer og analytiker</div>
-        <h1>Bygger ting, studerer økonomi, liker å få ting til å skje.</h1>
-        <p class="hero-intro">
-          Hei! Jeg heter Ken. Vokste opp i Oslo, bor nå i Bergen. Jeg er drevet av entreprenørskap
-          og liker å bygge ting fra bunnen av – enten det er et selskap, en analyse eller en enkel nettside som denne.
+      <div class="container">
+        <div class="hero__grid">
+          <div>
+            <h1 class="hero__title">Ken Greibesland.</h1>
+            <p class="hero__lead">
+              Førsteårs NHH-student. Bygger Greibesland Consulting. Tar case og koder.
+            </p>
+            <p class="hero__body">
+              Jobber med konkurranseanalyse, salg og pipeline-arbeid for
+              B2B-selskaper gjennom enkeltpersonforetaket mitt. Når jeg ikke
+              gjør det, sitter jeg med case eller lærer meg å bygge ting selv
+              (som denne siden).
+            </p>
+            <a class="hero__cta" href="kontakt.html">Si hei <span aria-hidden="true">→</span></a>
+            <p class="hero__meta meta">Bergen / Oslo &nbsp;·&nbsp; Available for projects</p>
+          </div>
+          <div class="hero__mark" aria-hidden="true">
+            <img src="assets/logo-stacked-navy.png" alt="">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navy-seksjon: hva jeg holder på med. -->
+    <section class="section--navy">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow">Akkurat nå</span>
+          <h2>Bygger ting. For andre.<br>Og for meg selv.</h2>
+        </div>
+        <div class="cols-3">
+          <div class="col reveal">
+            <span class="mono">01 / Konsulent</span>
+            <h3>Greibesland Consulting</h3>
+            <p>
+              Enkeltpersonforetaket mitt. Konkurranseanalyse, salg og
+              pipeline-arbeid. Akkurat nå mot Tekki AS.
+            </p>
+          </div>
+          <div class="col reveal">
+            <span class="mono">02 / Case</span>
+            <h3>NHHS Case Club</h3>
+            <p>
+              Case ukentlig sammen med andre NHH-studenter. Mest finans og
+              strategi. Head of Financials/Impact.
+            </p>
+          </div>
+          <div class="col reveal">
+            <span class="mono">03 / Egne ting</span>
+            <h3>Sideprosjekter</h3>
+            <p>
+              UB-bedrift fra videregående (eksitert). Driv av en finanskonto
+              på Instagram en stund. Småprosjekter som dette.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Utvalgt arbeid: asymmetrisk grid. -->
+    <section class="section--bone">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow">Utvalgt arbeid</span>
+          <h2>Noen av tingene jeg har laget.</h2>
+        </div>
+
+        <div class="featured">
+          <a class="card reveal" href="arbeid.html">
+            <div class="card__meta">
+              <span class="mono">2026</span>
+              <span class="mono">Konsulentoppdrag</span>
+            </div>
+            <h3 class="card__title">Tekki AS — Business Development Analyst</h3>
+            <p class="card__desc">
+              Konkurranseanalyse av det norske B2B-datamarkedet (Firmalisten
+              vs. Proff, Purehelp m.fl.). Pipeline-arbeid mot SME i maritim,
+              industri og energi.
+            </p>
+            <span class="card__cta">Les mer <span aria-hidden="true">→</span></span>
+          </a>
+
+          <a class="card reveal" href="notater/nordic-case-2026.html">
+            <div class="card__meta">
+              <span class="mono">2026</span>
+              <span class="mono">Case</span>
+            </div>
+            <h3 class="card__title">Nordic Case Challenge 2026</h3>
+            <p class="card__desc">
+              Biopharma-case for Alvotech-styret. 2.plass i Division A.
+            </p>
+            <span class="card__cta">Les notatet <span aria-hidden="true">→</span></span>
+          </a>
+
+          <a class="card reveal" href="arbeid.html">
+            <div class="card__meta">
+              <span class="mono">2025</span>
+              <span class="mono">Konsulentoppdrag</span>
+            </div>
+            <h3 class="card__title">Versiro — SEB ScaleCenter</h3>
+            <p class="card__desc">
+              Onboarding-materiale på nordiske kraftmarkeder og
+              konkurranseanalyse av nordiske energi-tech-aktører, levert
+              til CEO.
+            </p>
+            <span class="card__cta">Les mer <span aria-hidden="true">→</span></span>
+          </a>
+
+          <a class="card reveal" href="arbeid.html">
+            <div class="card__meta">
+              <span class="mono">2023–2024</span>
+              <span class="mono">Egne ting</span>
+            </div>
+            <h3 class="card__title">Quicknet UB — football-tech</h3>
+            <p class="card__desc">
+              Co-foundet UB-bedrift gjennom videregående. Fra konsept til
+              to B2B-partnere.
+            </p>
+            <span class="card__cta">Les mer <span aria-hidden="true">→</span></span>
+          </a>
+        </div>
+
+        <p style="margin-top: var(--s-7);">
+          <a href="arbeid.html" class="hero__cta">Se alt arbeid <span aria-hidden="true">→</span></a>
         </p>
       </div>
-      <div class="hero-avatar">
-        KG
-      </div>
     </section>
 
-    <!-- ARBEID / PROSJEKTER -->
-    <section id="arbeid">
-      <h2 class="section-heading">Ting jeg har brukt tid på.</h2>
-      <p class="section-sub">Et lite utvalg av jobber, prosjekter og eksperimenter.</p>
-
-      <div class="list">
-
-        <article class="item">
-          <div class="item-year">2026–</div>
-          <div class="item-main">
-            <div class="item-title">Forretningsanalyse i Tekki</div>
-            <div class="item-meta">Jobb · Tekki AS</div>
-            <p class="item-desc">
-              Jobber med analyser og strukturering av B2B-prosjekter sammen med et lite team som liker å teste nye ideer raskt.
+    <!-- Notater. -->
+    <section class="section--bone section--tight">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow">Notater</span>
+          <h2>Tanker, notater, refleksjoner.</h2>
+        </div>
+        <div class="notes-list">
+          <a class="note reveal" href="notater/nordic-case-2026.html">
+            <span class="meta">Mars 2026 &nbsp;·&nbsp; Case</span>
+            <h3 class="note__title">Nordic Case Challenge 2026</h3>
+            <p class="note__excerpt">
+              15 timer, fem personer, biopharma-case for Alvotech-styret.
+              Det jeg lærte om strukturert problemløsning under tidspress.
             </p>
-            <div class="item-tags">
-              <span class="tag-pill">Jobb</span>
-              <span class="tag-pill">Analyse</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="item">
-          <div class="item-year">2025–</div>
-          <div class="item-main">
-            <div class="item-title">Studentkonsulent i ScaleCenter-miljøet</div>
-            <div class="item-meta">Student · SEB ScaleCenter & Start NHH</div>
-            <p class="item-desc">
-              Forrige semester jobbet jeg med prosjekter for Versiro gjennom SEB sitt ScaleCenter. Nå følger jeg opp nye oppgaver for Sensorglobe via Start NHH sitt eget ScaleCenter.
-            </p>
-            <div class="item-tags">
-              <span class="tag-pill">Case</span>
-              <span class="tag-pill">Student</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="item">
-          <div class="item-year">2026</div>
-          <div class="item-main">
-            <div class="item-title">Case-konkurranse i Reykjavik</div>
-            <div class="item-meta">NHHS Case Club</div>
-            <p class="item-desc">
-              Reiste til Island for å løse et 15-timers case med teamet mitt. Vi endte opp på 2. plass i divisjonen vår (i gruppe med CBS, BI og LAB).
-            </p>
-            <div class="item-tags">
-              <span class="tag-pill">Case</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="item">
-          <div class="item-year">2023–2024</div>
-          <div class="item-main">
-            <div class="item-title">Quicknet – en fotball-startup</div>
-            <div class="item-meta">Gründer · Quicknet UB</div>
-            <p class="item-desc">
-              Bygget en enkel fysisk løsning for fotballspillere sammen med et lite team. Vi testet produktet i klubber og lærte mye underveis.
-            </p>
-            <div class="item-tags">
-              <span class="tag-pill">Gründer</span>
-              <span class="tag-pill">Fotball</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="item">
-          <div class="item-year">2022–2023</div>
-          <div class="item-main">
-            <div class="item-title">Financerevenue på Instagram</div>
-            <div class="item-meta">Gründer · @Financerevenue</div>
-            <p class="item-desc">
-              Eksperimenterte med å lage innhold om økonomi på Instagram. Endte med å bygge opp en konto som jeg senere solgte videre.
-            </p>
-            <div class="item-tags">
-              <span class="tag-pill">Gründer</span>
-              <span class="tag-pill">Innhold</span>
-            </div>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- KONTAKT -->
-    <section class="contact" id="kontakt">
-      <h2>La oss ta en prat.</h2>
-      <p>
-        Hvis du vil snakke om prosjekter, idéer, cases eller bare ta en kaffe i Bergen eller Oslo,
-        er det bare å sende en melding.
-      </p>
-      <div class="contact-actions">
-        <a class="btn-primary" href="mailto:kengreibesland@gmail.com">Ta kontakt på e-post</a>
-        <span class="contact-inline">
-          eller finn meg på
-          <a href="https://www.linkedin.com/in/ken-greibesland" target="_blank" rel="noopener noreferrer">LinkedIn</a>.
-        </span>
+            <span class="meta">Les →</span>
+          </a>
+        </div>
       </div>
     </section>
 
   </main>
 
-  <footer>
-    <div class="footer-locs">
-      <span>Bergen</span>
-      <span class="footer-dot"></span>
-      <span>Oslo</span>
-    </div>
-    <div class="footer-links">
-      <a href="https://www.linkedin.com/in/ken-greibesland" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <span>Tidligere: @Financerevenue</span>
+  <!-- Footer. -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__mark">
+          <img src="assets/logo-stacked-navy.png" alt="Greibesland Consulting">
+          <p class="meta" style="margin-top: var(--s-3);">Bergen / Oslo</p>
+        </div>
+        <div class="footer__col">
+          <h4>Kontakt</h4>
+          <a href="mailto:kengreibesland@gmail.com">kengreibesland@gmail.com</a>
+          <a href="https://linkedin.com/in/ken-greibesland" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/kengreibesland" rel="noopener">GitHub</a>
+        </div>
+        <div class="footer__col">
+          <h4>Sider</h4>
+          <a href="arbeid.html">Arbeid</a>
+          <a href="om.html">Om</a>
+          <a href="notater.html">Notater</a>
+          <a href="kontakt.html">Kontakt</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>Built by hand · 2026 · Greibesland Consulting</span>
+        <span>v1.0</span>
+      </div>
     </div>
   </footer>
 
+  <script src="js/main.js"></script>
 </body>
 </html>

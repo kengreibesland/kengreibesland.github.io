@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arbeid — Ken Greibesland</title>
+  <meta name="description" content="Konsulentoppdrag, case, egne ting og verv. Ting Ken Greibesland har bygd, levert eller bidratt til.">
+
+  <meta property="og:title" content="Arbeid — Ken Greibesland">
+  <meta property="og:description" content="Konsulentoppdrag, case, egne ting og verv.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kengreibesland.no/arbeid.html">
+  <meta property="og:image" content="https://kengreibesland.no/assets/logo-stacked-navy.png">
+
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="alternate icon" href="assets/favicon.ico">
+  <link rel="apple-touch-icon" href="assets/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!--
+    SVG-glyfer per kategori. Defineres én gang som <symbol> og gjenbrukes
+    via <use href="#id"/>. Holder DOM-en ren og gjør det trivielt å bytte
+    en glyf et annet sted senere.
+  -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- Konsulent: stigende søylediagram. Analytisk arbeid. -->
+      <symbol id="g-konsulent" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square">
+        <line x1="6"  y1="26" x2="6"  y2="20"/>
+        <line x1="13" y1="26" x2="13" y2="14"/>
+        <line x1="20" y1="26" x2="20" y2="10"/>
+        <line x1="27" y1="26" x2="27" y2="6"/>
+      </symbol>
+      <!-- Case: dokumentsiluett med tekstlinjer. -->
+      <symbol id="g-case" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="miter">
+        <rect x="8" y="5" width="16" height="22"/>
+        <line x1="11" y1="11" x2="21" y2="11"/>
+        <line x1="11" y1="15" x2="21" y2="15"/>
+        <line x1="11" y1="19" x2="17" y2="19"/>
+      </symbol>
+      <!-- Egne ting: asterisk / spark. Skapelse. -->
+      <symbol id="g-egne" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <line x1="16" y1="5"  x2="16" y2="27"/>
+        <line x1="5"  y1="16" x2="27" y2="16"/>
+        <line x1="8"  y1="8"  x2="24" y2="24"/>
+        <line x1="24" y1="8"  x2="8"  y2="24"/>
+      </symbol>
+      <!-- Verv: ring med fylt punkt. Tilhørighet/organisasjon. -->
+      <symbol id="g-verv" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="16" cy="16" r="11"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <header class="nav is-scrolled" id="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="Ken Greibesland, til forsiden">
+        <img src="assets/logo-horizontal-navy.png" alt="Greibesland Consulting">
+      </a>
+      <nav class="nav__links" aria-label="Hovedmeny">
+        <a href="arbeid.html" aria-current="page">Arbeid</a>
+        <a href="om.html">Om</a>
+        <a href="notater.html">Notater</a>
+        <a href="kontakt.html">Kontakt</a>
+      </nav>
+      <span class="nav__url" aria-hidden="true">kengreibesland.no</span>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="page-head">
+      <div class="container">
+        <span class="eyebrow">Arbeid</span>
+        <h1>Ting jeg har bygd, levert<br>eller bidratt til.</h1>
+
+        <div class="filters" role="tablist" aria-label="Filtrer arbeid">
+          <button class="filter is-active" data-filter="all"        role="tab" aria-selected="true">Alle</button>
+          <button class="filter"            data-filter="konsulent" role="tab" aria-selected="false">Konsulentoppdrag</button>
+          <button class="filter"            data-filter="case"      role="tab" aria-selected="false">Case</button>
+          <button class="filter"            data-filter="egne"      role="tab" aria-selected="false">Egne ting</button>
+          <button class="filter"            data-filter="verv"      role="tab" aria-selected="false">Verv</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section--bone section--tight">
+      <div class="container">
+        <div class="work-list">
+
+          <!-- 1. Tekki AS -->
+          <article class="work-item reveal" data-cat="konsulent">
+            <div class="thumb"><svg><use href="#g-konsulent"/></svg></div>
+            <div class="work-item__year">
+              <div>2026</div>
+              <div class="meta" style="margin-top: var(--s-1);">Tekki AS</div>
+              <div class="meta">Konsulentoppdrag</div>
+            </div>
+            <div>
+              <div class="work-item__role">
+                <span class="mono">Rolle</span>
+                <span>Business Development Analyst</span>
+              </div>
+              <h2 class="work-item__title">Konkurranseanalyse av norske B2B-dataplattformer</h2>
+              <p class="work-item__desc">
+                Konkurranseanalyse av Firmalisten.no opp mot Proff, Purehelp
+                og andre aktører i markedet. Pipeline-arbeid mot SME i
+                maritim, industri og energi.
+              </p>
+            </div>
+          </article>
+
+          <!-- 2. Alvotech / Nordic Case -->
+          <article class="work-item reveal" data-cat="case">
+            <div class="thumb"><svg><use href="#g-case"/></svg></div>
+            <div class="work-item__year">
+              <div>2026</div>
+              <div class="meta" style="margin-top: var(--s-1);">Alvotech</div>
+              <div class="meta">Case</div>
+            </div>
+            <div>
+              <div class="work-item__role">
+                <span class="mono">Rolle</span>
+                <span>Head of Financials/Impact</span>
+              </div>
+              <h2 class="work-item__title">Nordic Case Challenge 2026</h2>
+              <p class="work-item__desc">
+                Biopharma-case for Alvotech-styret. 2.plass i Division A.
+              </p>
+              <p style="margin-top: var(--s-3);">
+                <a href="notater/nordic-case-2026.html" class="hero__cta" style="font-size: 0.875rem;">
+                  Les notatet <span aria-hidden="true">→</span>
+                </a>
+              </p>
+            </div>
+          </article>
+
+          <!-- 3. MOWI -->
+          <article class="work-item reveal" data-cat="case">
+            <div class="thumb"><svg><use href="#g-case"/></svg></div>
+            <div class="work-item__year">
+              <div>2026</div>
+              <div class="meta" style="margin-top: var(--s-1);">MOWI</div>
+              <div class="meta">Case</div>
+            </div>
+            <div>
+              <h2 class="work-item__title">MOWI International Case Competition</h2>
+              <p class="work-item__desc">
+                Internasjonal case-konkurranse, sjømat.
+              </p>
+            </div>
+          </article>
+
+          <!-- 4. Sensorglobe / Start NHH ScaleCenter -->
+          <article class="work-item reveal" data-cat="konsulent">
+            <div class="thumb"><svg><use href="#g-konsulent"/></svg></div>
+            <div class="work-item__year">
+              <div>2026</div>
+              <div class="meta" style="margin-top: var(--s-1);">Sensorglobe</div>
+              <div class="meta">Konsulentoppdrag</div>
+            </div>
+            <div>
+              <div class="work-item__role">
+                <span class="mono">Program</span>
+                <span>Start NHH ScaleCenter</span>
+              </div>
+              <h2 class="work-item__title">LinkedIn-strategi og nyhetsbrev for ledelsen</h2>
+              <p class="work-item__desc">
+                Ukentlig nyhetsbrev og posisjonering på LinkedIn for
+                Sensorglobe-ledelsen.
+              </p>
+            </div>
+          </article>
+
+          <!-- 5. Versiro / SEB ScaleCenter -->
+          <article class="work-item reveal" data-cat="konsulent">
+            <div class="thumb"><svg><use href="#g-konsulent"/></svg></div>
+            <div class="work-item__year">
+              <div>2025</div>
+              <div class="meta" style="margin-top: var(--s-1);">Versiro</div>
+              <div class="meta">Konsulentoppdrag</div>
+            </div>
+            <div>
+              <div class="work-item__role">
+                <span class="mono">Program</span>
+                <span>SEB ScaleCenter</span>
+              </div>
+              <h2 class="work-item__title">Onboarding på nordiske kraftmarkeder + konkurranseanalyse</h2>
+              <p class="work-item__desc">
+                Onboarding-materiale på nordiske kraftmarkeder for nye
+                ansatte. Konkurranseanalyse av nordiske energi-tech og
+                SaaS-aktører, levert til CEO.
+              </p>
+            </div>
+          </article>
+
+          <!-- 6. FinanceRevenue -->
+          <article class="work-item reveal" data-cat="egne">
+            <div class="thumb"><svg><use href="#g-egne"/></svg></div>
+            <div class="work-item__year">
+              <div>2022–2023</div>
+              <div class="meta" style="margin-top: var(--s-1);">FinanceRevenue</div>
+              <div class="meta">Egne ting</div>
+            </div>
+            <div>
+              <h2 class="work-item__title">Finans-Instagram</h2>
+              <p class="work-item__desc">
+                Drev en finans-fokusert Instagram-konto. Eksitert i 2023.
+              </p>
+            </div>
+          </article>
+
+          <!-- 7. Quicknet UB -->
+          <article class="work-item reveal" data-cat="egne">
+            <div class="thumb"><svg><use href="#g-egne"/></svg></div>
+            <div class="work-item__year">
+              <div>2023–2024</div>
+              <div class="meta" style="margin-top: var(--s-1);">Quicknet UB</div>
+              <div class="meta">Egne ting</div>
+            </div>
+            <div>
+              <h2 class="work-item__title">Co-foundet UB-bedrift</h2>
+              <p class="work-item__desc">
+                Football-tech med peers fra videregående. Fra konsept til
+                to B2B-partnere.
+              </p>
+            </div>
+          </article>
+
+          <!-- 8. Heming IL -->
+          <article class="work-item reveal" data-cat="egne">
+            <div class="thumb"><svg><use href="#g-egne"/></svg></div>
+            <div class="work-item__year">
+              <div>2023–2025</div>
+              <div class="meta" style="margin-top: var(--s-1);">Heming IL</div>
+              <div class="meta">Egne ting</div>
+            </div>
+            <div>
+              <div class="work-item__role">
+                <span class="mono">Rolle</span>
+                <span>Head Coach (u-13)</span>
+              </div>
+              <h2 class="work-item__title">UEFA C-License</h2>
+              <p class="work-item__desc">
+                Trener og spiller (4. divisjon).
+              </p>
+            </div>
+          </article>
+
+          <!-- 9. NHHS Case Club -->
+          <article class="work-item reveal" data-cat="verv">
+            <div class="thumb"><svg><use href="#g-verv"/></svg></div>
+            <div class="work-item__year">
+              <div>2025–</div>
+              <div class="meta" style="margin-top: var(--s-1);">NHHS Case Club</div>
+              <div class="meta">Verv</div>
+            </div>
+            <div>
+              <h2 class="work-item__title">Head of Financials/Impact</h2>
+              <p class="work-item__desc">
+                Case ukentlig sammen med andre NHH-studenter, mest
+                finans og strategi.
+              </p>
+            </div>
+          </article>
+
+          <!-- 10. NHHI Squash -->
+          <article class="work-item reveal" data-cat="verv">
+            <div class="thumb"><svg><use href="#g-verv"/></svg></div>
+            <div class="work-item__year">
+              <div>2025–</div>
+              <div class="meta" style="margin-top: var(--s-1);">NHHI Squash</div>
+              <div class="meta">Verv</div>
+            </div>
+            <div>
+              <h2 class="work-item__title">Head of Finance</h2>
+            </div>
+          </article>
+
+          <!-- 11. Start NHH -->
+          <article class="work-item reveal" data-cat="verv">
+            <div class="thumb"><svg><use href="#g-verv"/></svg></div>
+            <div class="work-item__year">
+              <div>2025–</div>
+              <div class="meta" style="margin-top: var(--s-1);">Start NHH</div>
+              <div class="meta">Verv</div>
+            </div>
+            <div>
+              <h2 class="work-item__title">Aktivt medlem</h2>
+            </div>
+          </article>
+
+          <!-- 12. UKEN -->
+          <article class="work-item reveal" data-cat="verv">
+            <div class="thumb"><svg><use href="#g-verv"/></svg></div>
+            <div class="work-item__year">
+              <div>2026</div>
+              <div class="meta" style="margin-top: var(--s-1);">UKEN</div>
+              <div class="meta">Verv</div>
+            </div>
+            <div>
+              <h2 class="work-item__title">Guest Committee</h2>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__mark">
+          <img src="assets/logo-stacked-navy.png" alt="Greibesland Consulting">
+          <p class="meta" style="margin-top: var(--s-3);">Bergen / Oslo</p>
+        </div>
+        <div class="footer__col">
+          <h4>Kontakt</h4>
+          <a href="mailto:kengreibesland@gmail.com">kengreibesland@gmail.com</a>
+          <a href="https://linkedin.com/in/ken-greibesland" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/kengreibesland" rel="noopener">GitHub</a>
+        </div>
+        <div class="footer__col">
+          <h4>Sider</h4>
+          <a href="arbeid.html">Arbeid</a>
+          <a href="om.html">Om</a>
+          <a href="notater.html">Notater</a>
+          <a href="kontakt.html">Kontakt</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>Built by hand · 2026 · Greibesland Consulting</span>
+        <span>v1.0</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
